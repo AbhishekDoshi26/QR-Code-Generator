@@ -397,21 +397,19 @@
         </div>
       </div>
 
-      <div class="field">
-        <label for="errorLevel">Error correction</label>
-        <select id="errorLevel">
-          <option value="L">Low (L) — smallest code</option>
-          <option value="M" selected>Medium (M) — recommended</option>
-          <option value="Q">Quartile (Q)</option>
-          <option value="H">High (H) — best for logos/damage</option>
-        </select>
-        <div class="hint">Adds redundancy so the code still scans if part of it is dirty, damaged, or covered by a logo. Higher = more redundancy, slightly denser code.</div>
-      </div>
+      <!-- Error correction is applied automatically (Medium normally, High when a logo is added)
+           rather than exposed as a control most visitors won't recognize. -->
+      <select id="errorLevel" style="display:none" aria-hidden="true">
+        <option value="L">L</option>
+        <option value="M" selected>M</option>
+        <option value="Q">Q</option>
+        <option value="H">H</option>
+      </select>
 
       <div class="field">
         <label for="logoInput">Logo (optional)</label>
         <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml">
-        <div class="hint">Adding a logo switches error correction to High automatically, so the code keeps scanning.</div>
+        <div class="hint">We'll automatically boost the code's error correction so it still scans with a logo on top.</div>
         <button class="btn secondary" id="removeLogoBtn" type="button" style="display:none;margin-top:10px;">Remove logo</button>
       </div>
 
@@ -736,6 +734,7 @@
     logoImage = null;
     logoDataUrl = null;
     logoInput.value = '';
+    errorLevel.value = 'M';
     removeLogoBtn.style.display = 'none';
     if(urlInput.value.trim()) generate();
   });
