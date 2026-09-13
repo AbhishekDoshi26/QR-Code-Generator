@@ -7,6 +7,7 @@ A free, fast QR code generator. Paste any URL (or plain text), customize the siz
 - Generate a QR code from any URL or text
 - Adjustable size (150–1000px)
 - Custom foreground/background colors
+- Optional center logo overlay (auto-switches to High error correction so the code stays scannable)
 - Selectable error-correction level (L / M / Q / H)
 - Download as PNG or SVG
 - Copy the generated code straight to your clipboard

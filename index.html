@@ -131,6 +131,26 @@
     border-color:var(--accent);
     box-shadow:0 0 0 3px var(--accent-soft);
   }
+  input[type="file"]{
+    width:100%;
+    padding:10px 12px;
+    border-radius:10px;
+    border:1px dashed var(--border);
+    background:var(--bg);
+    color:var(--muted);
+    font-size:13.5px;
+  }
+  input[type="file"]::file-selector-button{
+    border:none;
+    background:var(--accent-soft);
+    color:var(--accent);
+    padding:7px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:600;
+    margin-right:10px;
+    cursor:pointer;
+  }
   .row2{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -385,6 +405,14 @@
           <option value="Q">Quartile (Q)</option>
           <option value="H">High (H) — best for logos/damage</option>
         </select>
+        <div class="hint">Adds redundancy so the code still scans if part of it is dirty, damaged, or covered by a logo. Higher = more redundancy, slightly denser code.</div>
+      </div>
+
+      <div class="field">
+        <label for="logoInput">Logo (optional)</label>
+        <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+        <div class="hint">Adding a logo switches error correction to High automatically, so the code keeps scanning.</div>
+        <button class="btn secondary" id="removeLogoBtn" type="button" style="display:none;margin-top:10px;">Remove logo</button>
       </div>
 
       <button class="btn" id="generateBtn" type="button">Generate QR code</button>
@@ -426,6 +454,8 @@
   const fgColor = document.getElementById('fgColor');
   const bgColor = document.getElementById('bgColor');
   const errorLevel = document.getElementById('errorLevel');
+  const logoInput = document.getElementById('logoInput');
+  const removeLogoBtn = document.getElementById('removeLogoBtn');
   const generateBtn = document.getElementById('generateBtn');
   const qrShell = document.getElementById('qrShell');
   const downloadPng = document.getElementById('downloadPng');
@@ -549,7 +579,7 @@
     return (typeof QRCode !== 'undefined' && QRCode.CorrectLevel) ? QRCode.CorrectLevel[key] : undefined;
   }
 
-  function buildSvg(qrInstance, size, fg, bg){
+  function buildSvg(qrInstance, size, fg, bg, logo){
     const count = qrInstance._oQRCode.getModuleCount();
     const cell = size / count;
     let rects = '';
@@ -560,8 +590,49 @@
         }
       }
     }
+    let logoMarkup = '';
+    if(logo && logo.dataUrl){
+      const logoBox = size * 0.26;
+      const pad = logoBox * 0.12;
+      const boxX = (size - logoBox) / 2;
+      const boxY = (size - logoBox) / 2;
+      const imgSize = logoBox - pad * 2;
+      logoMarkup = '<rect x="' + boxX.toFixed(2) + '" y="' + boxY.toFixed(2) + '" width="' + logoBox.toFixed(2) + '" height="' + logoBox.toFixed(2) + '" rx="' + (logoBox*0.14).toFixed(2) + '" fill="' + bg + '"/>' +
+        '<image x="' + (boxX+pad).toFixed(2) + '" y="' + (boxY+pad).toFixed(2) + '" width="' + imgSize.toFixed(2) + '" height="' + imgSize.toFixed(2) + '" href="' + logo.dataUrl + '" preserveAspectRatio="xMidYMid meet"/>';
+    }
     return '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">' +
-      '<rect width="100%" height="100%" fill="' + bg + '"/>' + rects + '</svg>';
+      '<rect width="100%" height="100%" fill="' + bg + '"/>' + rects + logoMarkup + '</svg>';
+  }
+
+  function drawLogoOnCanvas(canvas, logoImg, bg){
+    const ctx = canvas.getContext('2d');
+    const size = canvas.width;
+    const logoBox = size * 0.26;
+    const pad = logoBox * 0.12;
+    const boxX = (size - logoBox) / 2;
+    const boxY = (size - logoBox) / 2;
+    const radius = logoBox * 0.14;
+
+    ctx.save();
+    ctx.fillStyle = bg;
+    ctx.beginPath();
+    ctx.moveTo(boxX + radius, boxY);
+    ctx.arcTo(boxX + logoBox, boxY, boxX + logoBox, boxY + logoBox, radius);
+    ctx.arcTo(boxX + logoBox, boxY + logoBox, boxX, boxY + logoBox, radius);
+    ctx.arcTo(boxX, boxY + logoBox, boxX, boxY, radius);
+    ctx.arcTo(boxX, boxY, boxX + logoBox, boxY, radius);
+    ctx.closePath();
+    ctx.fill();
+
+    const imgSize = logoBox - pad * 2;
+    // Fit the logo inside its square while preserving aspect ratio.
+    const ratio = Math.min(imgSize / logoImg.width, imgSize / logoImg.height);
+    const drawW = logoImg.width * ratio;
+    const drawH = logoImg.height * ratio;
+    const drawX = boxX + pad + (imgSize - drawW) / 2;
+    const drawY = boxY + pad + (imgSize - drawH) / 2;
+    ctx.drawImage(logoImg, drawX, drawY, drawW, drawH);
+    ctx.restore();
   }
 
   function generate(){
@@ -609,13 +680,18 @@
     displayCanvas.width = canvas.width;
     displayCanvas.height = canvas.height;
     displayCanvas.getContext('2d').drawImage(canvas, 0, 0);
+
+    if(logoImage){
+      drawLogoOnCanvas(displayCanvas, logoImage, bg);
+    }
+
     qrShell.appendChild(displayCanvas);
     currentCanvas = displayCanvas;
     downloadPng.disabled = false;
     copyBtn.disabled = false;
 
     try {
-      currentSvg = buildSvg(qrInstance, size, fg, bg);
+      currentSvg = buildSvg(qrInstance, size, fg, bg, logoImage ? { dataUrl: logoDataUrl } : null);
       downloadSvg.disabled = false;
     } catch(e){
       currentSvg = null;
@@ -625,6 +701,44 @@
     const dataUrl = displayCanvas.toDataURL('image/png');
     addToHistory(text, dataUrl, fg, bg);
   }
+
+  // --- Logo upload ---
+  let logoImage = null;
+  let logoDataUrl = null;
+
+  logoInput.addEventListener('change', function(e){
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    if(file.size > 2 * 1024 * 1024){
+      errorText.textContent = 'Logo image is too large — please use one under 2MB.';
+      logoInput.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      const img = new Image();
+      img.onload = function(){
+        logoImage = img;
+        logoDataUrl = ev.target.result;
+        errorLevel.value = 'H';
+        removeLogoBtn.style.display = 'inline-block';
+        if(urlInput.value.trim()) generate();
+      };
+      img.onerror = function(){
+        errorText.textContent = 'Could not read that image file.';
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  removeLogoBtn.addEventListener('click', function(){
+    logoImage = null;
+    logoDataUrl = null;
+    logoInput.value = '';
+    removeLogoBtn.style.display = 'none';
+    if(urlInput.value.trim()) generate();
+  });
 
   generateBtn.addEventListener('click', generate);
   urlInput.addEventListener('keydown', function(e){
