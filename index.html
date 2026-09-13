@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free QR Code Generator Online — Create & Download QR Codes | QR Forge</title>
-<meta name="description" content="Create a QR code online for free. Paste any URL or text, customize colors, add a logo, and download instantly as PNG or SVG. No sign-up, no watermark — runs entirely in your browser.">
+<title>Free QR Code Generator — URL, Wi-Fi, vCard, Email & SMS | QR Forge</title>
+<meta name="description" content="Create QR codes free online for links, Wi-Fi, contact cards (vCard), email, phone, or SMS. Customize colors, add a logo, and download as PNG or SVG. No sign-up, private, browser-based.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Abhishek Doshi">
 <meta name="theme-color" content="#4f46e5">
@@ -16,8 +16,8 @@
 <!-- Open Graph / social sharing -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="QR Forge">
-<meta property="og:title" content="Free QR Code Generator Online | QR Forge">
-<meta property="og:description" content="Create a QR code online for free. Paste any URL or text, customize colors, add a logo, and download instantly as PNG or SVG. No sign-up, no watermark.">
+<meta property="og:title" content="Free QR Code Generator — URL, Wi-Fi, vCard, Email & SMS | QR Forge">
+<meta property="og:description" content="Create QR codes free online for links, Wi-Fi, contact cards (vCard), email, phone, or SMS. Customize colors, add a logo, and download as PNG or SVG. No sign-up, private, browser-based.">
 <meta property="og:url" content="https://abhishekdoshi26.github.io/qr-forge/">
 <meta property="og:image" content="https://abhishekdoshi26.github.io/qr-forge/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -25,8 +25,8 @@
 <meta property="og:image:alt" content="QR Forge — free QR code generator">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free QR Code Generator Online | QR Forge">
-<meta name="twitter:description" content="Create a QR code online for free. Paste any URL or text, customize colors, add a logo, and download instantly as PNG or SVG.">
+<meta name="twitter:title" content="Free QR Code Generator — URL, Wi-Fi, vCard, Email & SMS | QR Forge">
+<meta name="twitter:description" content="Create QR codes free online for links, Wi-Fi, contact cards (vCard), email, phone, or SMS. Customize colors, add a logo, and download as PNG or SVG.">
 <meta name="twitter:image" content="https://abhishekdoshi26.github.io/qr-forge/og-image.png">
 
 <script src="qrcode.min.js"></script>
@@ -52,6 +52,9 @@
   },
   "featureList": [
     "Generate QR codes from any URL or text",
+    "Wi-Fi network QR codes that connect a phone instantly",
+    "vCard / contact card QR codes that save straight to contacts",
+    "Email, phone, and SMS QR codes with pre-filled content",
     "Adjustable size from 150 to 1000 pixels",
     "Custom foreground and background colors",
     "Optional logo overlay with automatic error-correction boost",
@@ -93,6 +96,30 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Any text works, including website URLs, Wi-Fi network credentials, plain messages, phone numbers, or email addresses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I make a QR code for Wi-Fi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Switch to the Wi-Fi tab, enter your network name (SSID), password, and security type, then generate. Scanning the code connects a phone to the network instantly, without typing the password."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I create a QR code for my business card (vCard)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use the Contact tab to enter a name, phone, email, and company. QR Forge builds a standard vCard QR code that offers to save straight to a phone's contacts when scanned."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does QR Forge support email, phone, and SMS QR codes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The Email, Phone, and SMS tabs build the correctly formatted code so scanning opens a pre-filled email, dials a number, or starts a pre-filled text message."
       }
     },
     {
@@ -292,6 +319,27 @@
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:14px;
+  }
+  .type-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .type-tab{
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .type-tab:hover{border-color:var(--accent);}
+  .type-tab.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
   }
   .color-field{
     display:flex;
@@ -609,15 +657,105 @@
 
   <div class="hero">
     <h1>Turn any link into a QR code</h1>
-    <p>Paste a URL, tweak the style, and download it in seconds. Nothing leaves your browser.</p>
+    <p>Paste a URL, or build a Wi-Fi, contact, email, phone, or SMS code — customize the style and download in seconds. Nothing leaves your browser.</p>
   </div>
 
   <div class="grid">
     <div class="card">
       <div class="field">
+        <label>QR code type</label>
+        <div class="type-tabs" id="typeTabs">
+          <button type="button" class="type-tab active" data-type="text">Link / Text</button>
+          <button type="button" class="type-tab" data-type="wifi">Wi-Fi</button>
+          <button type="button" class="type-tab" data-type="vcard">Contact</button>
+          <button type="button" class="type-tab" data-type="email">Email</button>
+          <button type="button" class="type-tab" data-type="phone">Phone</button>
+          <button type="button" class="type-tab" data-type="sms">SMS</button>
+        </div>
+      </div>
+
+      <div class="field type-panel" data-panel="text">
         <label for="urlInput">URL or text</label>
         <input type="text" id="urlInput" placeholder="https://example.com" autocomplete="off" spellcheck="false">
-        <div class="hint">Works with any text: links, wifi strings, plain messages.</div>
+        <div class="hint">Works with any text: links, plain messages, or anything else you want scanned.</div>
+      </div>
+
+      <div class="field type-panel" data-panel="wifi" hidden>
+        <label for="wifiSsid">Network name (SSID)</label>
+        <input type="text" id="wifiSsid" placeholder="MyHomeWiFi" autocomplete="off">
+        <div class="row2" style="margin-top:14px;">
+          <div>
+            <label for="wifiPassword">Password</label>
+            <input type="text" id="wifiPassword" placeholder="Leave blank if open" autocomplete="off">
+          </div>
+          <div>
+            <label for="wifiSecurity">Security</label>
+            <select id="wifiSecurity">
+              <option value="WPA" selected>WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">None (open network)</option>
+            </select>
+          </div>
+        </div>
+        <div class="hint">Scanning this code connects a phone to your Wi-Fi instantly — no typing required.</div>
+      </div>
+
+      <div class="field type-panel" data-panel="vcard" hidden>
+        <label for="vcardName">Full name</label>
+        <input type="text" id="vcardName" placeholder="Abhishek Doshi" autocomplete="off">
+        <div class="row2" style="margin-top:14px;">
+          <div>
+            <label for="vcardPhone">Phone</label>
+            <input type="text" id="vcardPhone" placeholder="+1 555 555 5555" autocomplete="off">
+          </div>
+          <div>
+            <label for="vcardEmail">Email</label>
+            <input type="text" id="vcardEmail" placeholder="you@example.com" autocomplete="off">
+          </div>
+        </div>
+        <div class="row2" style="margin-top:14px;">
+          <div>
+            <label for="vcardOrg">Company (optional)</label>
+            <input type="text" id="vcardOrg" placeholder="Acme Inc." autocomplete="off">
+          </div>
+          <div>
+            <label for="vcardUrl">Website (optional)</label>
+            <input type="text" id="vcardUrl" placeholder="https://example.com" autocomplete="off">
+          </div>
+        </div>
+        <div class="hint">Builds a standard vCard — scanning it offers to save the contact directly to a phone.</div>
+      </div>
+
+      <div class="field type-panel" data-panel="email" hidden>
+        <label for="emailTo">Recipient email</label>
+        <input type="text" id="emailTo" placeholder="someone@example.com" autocomplete="off">
+        <div class="row2" style="margin-top:14px;">
+          <div>
+            <label for="emailSubject">Subject (optional)</label>
+            <input type="text" id="emailSubject" placeholder="Subject" autocomplete="off">
+          </div>
+          <div>
+            <label for="emailBody">Message (optional)</label>
+            <input type="text" id="emailBody" placeholder="Message" autocomplete="off">
+          </div>
+        </div>
+        <div class="hint">Scanning opens a pre-filled email, ready to send.</div>
+      </div>
+
+      <div class="field type-panel" data-panel="phone" hidden>
+        <label for="phoneNumber">Phone number</label>
+        <input type="text" id="phoneNumber" placeholder="+1 555 555 5555" autocomplete="off">
+        <div class="hint">Scanning dials the number immediately.</div>
+      </div>
+
+      <div class="field type-panel" data-panel="sms" hidden>
+        <label for="smsNumber">Phone number</label>
+        <input type="text" id="smsNumber" placeholder="+1 555 555 5555" autocomplete="off">
+        <div class="field" style="margin:14px 0 0;">
+          <label for="smsMessage">Message (optional)</label>
+          <input type="text" id="smsMessage" placeholder="Pre-filled text message" autocomplete="off">
+        </div>
+        <div class="hint">Scanning opens a pre-filled text message, ready to send.</div>
       </div>
 
       <div class="field">
@@ -681,12 +819,12 @@
 
   <section class="info-section" id="how-it-works">
     <h2>How to create a QR code</h2>
-    <p class="lead">QR Forge turns any link or text into a downloadable QR code in three quick steps — no account, no software install.</p>
+    <p class="lead">QR Forge turns any link, Wi-Fi network, contact, or message into a downloadable QR code in three quick steps — no account, no software install.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Paste your link or text</h3>
-        <p>Enter a website URL, Wi-Fi string, phone number, or any plain text you want people to scan.</p>
+        <h3>Pick a type and fill it in</h3>
+        <p>Choose Link, Wi-Fi, Contact, Email, Phone, or SMS, then fill in the friendly fields — QR Forge handles the formatting.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -726,8 +864,8 @@
         <p>Error correction is tuned automatically — boosted when a logo is added — so your codes keep scanning reliably.</p>
       </div>
       <div class="feature">
-        <h3>Works for more than links</h3>
-        <p>Encode website URLs, Wi-Fi credentials, phone numbers, email addresses, or any plain text message.</p>
+        <h3>Dedicated builders, not just plain text</h3>
+        <p>Wi-Fi, vCard contact cards, email, phone, and SMS each get a proper form — QR Forge builds the correctly formatted code for you.</p>
       </div>
     </div>
   </section>
@@ -745,6 +883,18 @@
     <details>
       <summary>What can I put into a QR code?</summary>
       <p>Any text works, including website URLs, Wi-Fi network credentials, plain messages, phone numbers, or email addresses.</p>
+    </details>
+    <details>
+      <summary>How do I make a QR code for Wi-Fi?</summary>
+      <p>Switch to the Wi-Fi tab, enter your network name (SSID), password, and security type, then generate. Scanning the code connects a phone to the network instantly, without typing the password.</p>
+    </details>
+    <details>
+      <summary>Can I create a QR code for my business card (vCard)?</summary>
+      <p>Yes. Use the Contact tab to enter a name, phone, email, and company. QR Forge builds a standard vCard QR code that offers to save straight to a phone's contacts when scanned.</p>
+    </details>
+    <details>
+      <summary>Does QR Forge support email, phone, and SMS QR codes?</summary>
+      <p>Yes. The Email, Phone, and SMS tabs build the correctly formatted code so scanning opens a pre-filled email, dials a number, or starts a pre-filled text message.</p>
     </details>
     <details>
       <summary>What formats can I download my QR code in?</summary>
@@ -784,6 +934,8 @@
 <script>
 (function(){
   const urlInput = document.getElementById('urlInput');
+  const typeTabs = document.getElementById('typeTabs');
+  const typePanels = document.querySelectorAll('.type-panel');
   const sizeRange = document.getElementById('sizeRange');
   const sizeVal = document.getElementById('sizeVal');
   const fgColor = document.getElementById('fgColor');
@@ -871,13 +1023,14 @@
       div.className = 'history-item';
       const img = document.createElement('img');
       img.src = item.dataUrl;
-      img.alt = 'QR code for ' + item.text;
+      img.alt = 'QR code for ' + historyLabelFor(item.text);
       const url = document.createElement('div');
       url.className = 'url';
-      url.textContent = item.text;
+      url.textContent = historyLabelFor(item.text);
       const btn = document.createElement('button');
       btn.textContent = 'Reuse';
       btn.addEventListener('click', function(){
+        selectType('text');
         urlInput.value = item.text;
         fgColor.value = item.fg || '#111111';
         bgColor.value = item.bg || '#ffffff';
@@ -903,6 +1056,133 @@
     list.unshift({text: text, dataUrl: dataUrl, fg: fg, bg: bg, label: label || '', ts: Date.now()});
     saveHistory(list);
     renderHistory();
+  }
+
+  // Friendlier label for history cards so raw Wi-Fi passwords / vCard bodies aren't shown verbatim.
+  function historyLabelFor(text){
+    if(text.indexOf('WIFI:') === 0){
+      const m = text.match(/S:((?:[^\\;]|\\.)*);/);
+      return 'Wi-Fi: ' + (m ? m[1].replace(/\\(.)/g, '$1') : 'network');
+    }
+    if(text.indexOf('BEGIN:VCARD') === 0){
+      const m = text.match(/FN:([^\n]*)/);
+      return 'Contact: ' + (m ? m[1] : '');
+    }
+    if(text.indexOf('mailto:') === 0) return 'Email: ' + text.slice(7).split('?')[0];
+    if(text.indexOf('tel:') === 0) return 'Phone: ' + text.slice(4);
+    if(text.indexOf('SMSTO:') === 0) return 'SMS: ' + text.slice(6).split(':')[0];
+    return text;
+  }
+
+  // --- QR type selector (Link/Text, Wi-Fi, Contact, Email, Phone, SMS) ---
+  // Structured types build their encoded value into this variable rather than
+  // urlInput.value — <input type="text"> silently strips line breaks on assignment,
+  // which corrupts the multi-line vCard format if routed through the input instead.
+  let currentType = 'text';
+  let currentEncodedValue = '';
+
+  function selectType(type){
+    currentType = type;
+    typeTabs.querySelectorAll('.type-tab').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-type') === type);
+    });
+    typePanels.forEach(function(p){
+      p.hidden = p.getAttribute('data-panel') !== type;
+    });
+  }
+
+  function escapeWifi(str){
+    return String(str).replace(/([\\;,:"])/g, '\\$1');
+  }
+  function escapeVCard(str){
+    return String(str).replace(/([\\;,])/g, '\\$1');
+  }
+
+  function buildWifiValue(){
+    const ssid = document.getElementById('wifiSsid').value.trim();
+    if(!ssid) return '';
+    const password = document.getElementById('wifiPassword').value;
+    const security = document.getElementById('wifiSecurity').value;
+    let str = 'WIFI:T:' + security + ';S:' + escapeWifi(ssid) + ';';
+    if(security !== 'nopass' && password){
+      str += 'P:' + escapeWifi(password) + ';';
+    }
+    return str + ';';
+  }
+
+  function buildVCardValue(){
+    const name = document.getElementById('vcardName').value.trim();
+    if(!name) return '';
+    const phone = document.getElementById('vcardPhone').value.trim();
+    const email = document.getElementById('vcardEmail').value.trim();
+    const org = document.getElementById('vcardOrg').value.trim();
+    const url = document.getElementById('vcardUrl').value.trim();
+    const parts = name.split(/\s+/);
+    const first = parts.shift() || '';
+    const last = parts.join(' ');
+    const lines = ['BEGIN:VCARD', 'VERSION:3.0', 'N:' + escapeVCard(last) + ';' + escapeVCard(first), 'FN:' + escapeVCard(name)];
+    if(org) lines.push('ORG:' + escapeVCard(org));
+    if(phone) lines.push('TEL:' + phone);
+    if(email) lines.push('EMAIL:' + email);
+    if(url) lines.push('URL:' + url);
+    lines.push('END:VCARD');
+    return lines.join('\n');
+  }
+
+  function buildEmailValue(){
+    const to = document.getElementById('emailTo').value.trim();
+    if(!to) return '';
+    const subject = document.getElementById('emailSubject').value.trim();
+    const body = document.getElementById('emailBody').value.trim();
+    const params = [];
+    if(subject) params.push('subject=' + encodeURIComponent(subject));
+    if(body) params.push('body=' + encodeURIComponent(body));
+    return 'mailto:' + to + (params.length ? '?' + params.join('&') : '');
+  }
+
+  function buildPhoneValue(){
+    const phone = document.getElementById('phoneNumber').value.trim();
+    return phone ? 'tel:' + phone.replace(/\s+/g, '') : '';
+  }
+
+  function buildSmsValue(){
+    const phone = document.getElementById('smsNumber').value.trim();
+    if(!phone) return '';
+    const message = document.getElementById('smsMessage').value.trim();
+    return 'SMSTO:' + phone.replace(/\s+/g, '') + ':' + message;
+  }
+
+  function updateEncodedValue(){
+    const builders = { wifi: buildWifiValue, vcard: buildVCardValue, email: buildEmailValue, phone: buildPhoneValue, sms: buildSmsValue };
+    const builder = builders[currentType];
+    if(builder) currentEncodedValue = builder();
+  }
+
+  typeTabs.addEventListener('click', function(e){
+    const btn = e.target.closest('.type-tab');
+    if(!btn) return;
+    const type = btn.getAttribute('data-type');
+    if(type === currentType) return;
+    selectType(type);
+    errorText.textContent = '';
+    if(type === 'text'){
+      urlInput.value = '';
+      urlInput.focus();
+    } else {
+      updateEncodedValue();
+    }
+  });
+
+  ['wifiSsid','wifiPassword','wifiSecurity','vcardName','vcardPhone','vcardEmail','vcardOrg','vcardUrl','emailTo','emailSubject','emailBody','phoneNumber','smsNumber','smsMessage'].forEach(function(id){
+    const el = document.getElementById(id);
+    el.addEventListener('input', updateEncodedValue);
+    el.addEventListener('change', updateEncodedValue);
+  });
+
+  function focusActivePanel(){
+    const panel = document.querySelector('.type-panel[data-panel="' + currentType + '"]');
+    const first = panel && panel.querySelector('input,select,textarea');
+    if(first) first.focus(); else urlInput.focus();
   }
 
   // Hidden scratch element qrcodejs renders into; we pull the canvas out of it.
@@ -980,11 +1260,19 @@
   }
 
   function generate(){
-    const text = urlInput.value.trim();
+    const text = (currentType === 'text' ? urlInput.value : currentEncodedValue).trim();
     errorText.textContent = '';
     if(!text){
-      errorText.textContent = 'Enter a URL or some text first.';
-      urlInput.focus();
+      const messages = {
+        text: 'Enter a URL or some text first.',
+        wifi: 'Enter your Wi-Fi network name (SSID) first.',
+        vcard: 'Enter a name for the contact card first.',
+        email: 'Enter a recipient email address first.',
+        phone: 'Enter a phone number first.',
+        sms: 'Enter a phone number for the SMS first.'
+      };
+      errorText.textContent = messages[currentType] || messages.text;
+      focusActivePanel();
       return;
     }
 
