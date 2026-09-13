@@ -1,0 +1,21 @@
+{
+  "name": "QR Forge — Free QR Code Generator",
+  "short_name": "QR Forge",
+  "description": "Create free QR codes online. Customize colors, add a logo, and download as PNG or SVG.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

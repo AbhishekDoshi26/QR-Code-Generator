@@ -3,10 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QR Code Generator — Turn any link into a scannable code</title>
-<meta name="description" content="Free, fast QR code generator. Paste a URL, customize colors and size, and download your QR code as PNG or SVG.">
+<title>Free QR Code Generator Online — Create & Download QR Codes | QR Forge</title>
+<meta name="description" content="Create a QR code online for free. Paste any URL or text, customize colors, add a logo, and download instantly as PNG or SVG. No sign-up, no watermark — runs entirely in your browser.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Abhishek Doshi">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://abhishekdoshi26.github.io/qr-forge/">
+<link rel="manifest" href="site.webmanifest">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%2230%22 height=%2230%22 x=%2210%22 y=%2210%22 fill=%22%23111%22/><rect width=%2230%22 height=%2230%22 x=%2260%22 y=%2210%22 fill=%22%23111%22/><rect width=%2230%22 height=%2230%22 x=%2210%22 y=%2260%22 fill=%22%23111%22/></svg>">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="QR Forge">
+<meta property="og:title" content="Free QR Code Generator Online | QR Forge">
+<meta property="og:description" content="Create a QR code online for free. Paste any URL or text, customize colors, add a logo, and download instantly as PNG or SVG. No sign-up, no watermark.">
+<meta property="og:url" content="https://abhishekdoshi26.github.io/qr-forge/">
+<meta property="og:image" content="https://abhishekdoshi26.github.io/qr-forge/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="QR Forge — free QR code generator">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free QR Code Generator Online | QR Forge">
+<meta name="twitter:description" content="Create a QR code online for free. Paste any URL or text, customize colors, add a logo, and download instantly as PNG or SVG.">
+<meta name="twitter:image" content="https://abhishekdoshi26.github.io/qr-forge/og-image.png">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- Privacy-first analytics (GoatCounter): no cookies, no personal data, just anonymous pageview counts. -->
+<script data-goatcounter="https://qrforge.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Forge",
+  "url": "https://abhishekdoshi26.github.io/qr-forge/",
+  "description": "Free QR code generator. Paste any URL or text, customize size and colors, add a logo, and download your QR code as PNG or SVG. Runs entirely in your browser.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Generate QR codes from any URL or text",
+    "Adjustable size from 150 to 1000 pixels",
+    "Custom foreground and background colors",
+    "Optional logo overlay with automatic error-correction boost",
+    "Download as PNG or vector SVG",
+    "Copy QR code image to clipboard",
+    "Local, private, in-browser generation"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Abhishek Doshi",
+    "url": "https://abhishekdoshi.dev"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this QR code generator free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. QR Forge is completely free to use, with no sign-up, no watermark, and no limit on how many QR codes you can create."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do the QR codes expire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. These are static QR codes generated entirely in your browser, so they never expire and don't depend on any server staying online."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What can I put into a QR code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Any text works, including website URLs, Wi-Fi network credentials, plain messages, phone numbers, or email addresses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What formats can I download my QR code in?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can download as a PNG for everyday use, or as a scalable SVG for print and large-format designs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I add a logo to my QR code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Upload a logo and QR Forge automatically increases the error-correction level so the code keeps scanning reliably with the logo on top."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data private when I generate a QR code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Everything happens locally in your browser — your URL, text, and logo are never uploaded to a server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does QR Forge use cookies or track visitors?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We use GoatCounter, a privacy-first analytics tool, to see anonymous pageview counts. It doesn't use cookies and doesn't collect personal data or IP addresses — it never sees the URLs or text you turn into QR codes."
+      }
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#f6f7fb;
@@ -65,6 +189,20 @@
     background:var(--accent);
     display:grid;place-items:center;
     color:white;font-size:16px;
+  }
+  .top-nav{
+    display:flex;
+    gap:20px;
+  }
+  .top-nav a{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .top-nav a:hover{color:var(--accent);}
+  @media (max-width:640px){
+    .top-nav{display:none;}
   }
   .theme-toggle{
     border:1px solid var(--border);
@@ -269,6 +407,107 @@
     font-size:18px;
     margin:0 0 14px;
   }
+  .info-section{
+    margin-top:56px;
+  }
+  .info-section h2{
+    font-size:22px;
+    margin:0 0 8px;
+  }
+  .info-section > p.lead{
+    color:var(--muted);
+    font-size:15px;
+    margin:0 0 22px;
+    max-width:640px;
+  }
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  @media (max-width:760px){
+    .steps{grid-template-columns:1fr;}
+  }
+  .step{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .step .step-num{
+    width:28px;height:28px;
+    border-radius:8px;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-weight:700;
+    font-size:13px;
+    display:grid;
+    place-items:center;
+    margin-bottom:12px;
+  }
+  .step h3{
+    font-size:15.5px;
+    margin:0 0 6px;
+  }
+  .step p{
+    font-size:13.5px;
+    color:var(--muted);
+    margin:0;
+    line-height:1.5;
+  }
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+  }
+  .feature{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+  }
+  .feature h3{
+    font-size:14.5px;
+    margin:0 0 4px;
+  }
+  .feature p{
+    font-size:13px;
+    color:var(--muted);
+    margin:0;
+    line-height:1.5;
+  }
+  .faq{
+    max-width:760px;
+  }
+  .faq details{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 18px;
+    margin-bottom:10px;
+  }
+  .faq summary{
+    cursor:pointer;
+    font-weight:600;
+    font-size:14.5px;
+    list-style:none;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{
+    content:'+';
+    float:right;
+    color:var(--muted);
+    font-weight:400;
+  }
+  .faq details[open] summary::after{
+    content:'−';
+  }
+  .faq p{
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.6;
+    margin:10px 0 0;
+  }
   .history-empty{
     color:var(--muted);
     font-size:14px;
@@ -358,6 +597,11 @@
       <div class="brand-mark">▦</div>
       QR Forge
     </div>
+    <nav class="top-nav">
+      <a href="#how-it-works">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </nav>
     <button class="theme-toggle" id="themeToggle" type="button">
       <span id="themeIcon">🌙</span>
       <span id="themeLabel">Dark mode</span>
@@ -435,6 +679,91 @@
       <button class="btn secondary" id="copyBtn" type="button" disabled style="max-width:320px;width:100%;">Copy image to clipboard</button>
     </div>
   </div>
+
+  <section class="info-section" id="how-it-works">
+    <h2>How to create a QR code</h2>
+    <p class="lead">QR Forge turns any link or text into a downloadable QR code in three quick steps — no account, no software install.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Paste your link or text</h3>
+        <p>Enter a website URL, Wi-Fi string, phone number, or any plain text you want people to scan.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Customize the look</h3>
+        <p>Adjust the size, pick foreground and background colors, and optionally drop in a logo.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Download & share</h3>
+        <p>Save your QR code as a PNG for everyday use or a scalable SVG for print, then share it anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section" id="features">
+    <h2>Why use QR Forge as your QR code generator</h2>
+    <p class="lead">A free QR code maker built for speed and privacy, with the customization options most generators charge for.</p>
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>100% free, no sign-up</h3>
+        <p>Generate unlimited QR codes with no account, no watermark, and no hidden usage limits.</p>
+      </div>
+      <div class="feature">
+        <h3>Private by design</h3>
+        <p>Every QR code is generated client-side in your browser — your data is never uploaded to a server.</p>
+      </div>
+      <div class="feature">
+        <h3>PNG and vector SVG export</h3>
+        <p>Download a raster PNG for the web, or a true vector SVG that scales cleanly for print and signage.</p>
+      </div>
+      <div class="feature">
+        <h3>Custom colors and logo</h3>
+        <p>Match your brand with custom foreground/background colors and an optional center logo overlay.</p>
+      </div>
+      <div class="feature">
+        <h3>Scan-safe error correction</h3>
+        <p>Error correction is tuned automatically — boosted when a logo is added — so your codes keep scanning reliably.</p>
+      </div>
+      <div class="feature">
+        <h3>Works for more than links</h3>
+        <p>Encode website URLs, Wi-Fi credentials, phone numbers, email addresses, or any plain text message.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section faq" id="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>Is this QR code generator free?</summary>
+      <p>Yes. QR Forge is completely free to use, with no sign-up, no watermark, and no limit on how many QR codes you can create.</p>
+    </details>
+    <details>
+      <summary>Do the QR codes expire?</summary>
+      <p>No. These are static QR codes generated entirely in your browser, so they never expire and don't depend on any server staying online.</p>
+    </details>
+    <details>
+      <summary>What can I put into a QR code?</summary>
+      <p>Any text works, including website URLs, Wi-Fi network credentials, plain messages, phone numbers, or email addresses.</p>
+    </details>
+    <details>
+      <summary>What formats can I download my QR code in?</summary>
+      <p>You can download as a PNG for everyday use, or as a scalable SVG for print and large-format designs.</p>
+    </details>
+    <details>
+      <summary>Can I add a logo to my QR code?</summary>
+      <p>Yes. Upload a logo and QR Forge automatically increases the error-correction level so the code keeps scanning reliably with the logo on top.</p>
+    </details>
+    <details>
+      <summary>Is my data private when I generate a QR code?</summary>
+      <p>Yes. Everything happens locally in your browser — your URL, text, and logo are never uploaded to a server.</p>
+    </details>
+    <details>
+      <summary>Does QR Forge use cookies or track visitors?</summary>
+      <p>We use <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>, a privacy-first analytics tool, to see anonymous pageview counts. It doesn't use cookies and doesn't collect personal data or IP addresses — it never sees the URLs or text you turn into QR codes.</p>
+    </details>
+  </section>
 
   <section class="history">
     <h2>Recent codes</h2>

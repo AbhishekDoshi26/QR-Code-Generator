@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhishekdoshi26.github.io/qr-forge/sitemap.xml
