@@ -415,9 +415,9 @@
       </div>
 
       <div class="field">
-        <label for="labelInput">Name / caption (optional)</label>
+        <label for="labelInput">File name (optional)</label>
         <input type="text" id="labelInput" placeholder="e.g. Abhishek Doshi" maxlength="60" autocomplete="off">
-        <div class="hint">Printed under the QR code, in both the PNG and SVG downloads.</div>
+        <div class="hint">Not shown on the code itself — just used to name the downloaded PNG/SVG file.</div>
       </div>
 
       <button class="btn" id="generateBtn" type="button">Generate QR code</button>
@@ -589,22 +589,12 @@
     return (typeof QRCode !== 'undefined' && QRCode.CorrectLevel) ? QRCode.CorrectLevel[key] : undefined;
   }
 
-  const LABEL_FONT_STACK = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-
-  function labelHeightFor(size){
-    return Math.max(36, Math.round(size * 0.16));
-  }
-
-  function escapeXml(str){
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
   function slugify(str){
     const s = str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     return s || 'qr-code';
   }
 
-  function buildSvg(qrInstance, size, fg, bg, logo, label){
+  function buildSvg(qrInstance, size, fg, bg, logo){
     const count = qrInstance._oQRCode.getModuleCount();
     const cell = size / count;
     let rects = '';
@@ -626,49 +616,8 @@
         '<image x="' + (boxX+pad).toFixed(2) + '" y="' + (boxY+pad).toFixed(2) + '" width="' + imgSize.toFixed(2) + '" height="' + imgSize.toFixed(2) + '" href="' + logo.dataUrl + '" preserveAspectRatio="xMidYMid meet"/>';
     }
 
-    let labelMarkup = '';
-    let totalHeight = size;
-    if(label){
-      const lh = labelHeightFor(size);
-      totalHeight = size + lh;
-      const fontSize = Math.round(lh * 0.42);
-      labelMarkup = '<text x="' + (size/2).toFixed(2) + '" y="' + (size + lh/2).toFixed(2) + '" text-anchor="middle" dominant-baseline="middle" font-family=\'' + LABEL_FONT_STACK + '\' font-size="' + fontSize + '" fill="' + fg + '">' + escapeXml(label) + '</text>';
-    }
-
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + totalHeight + '" viewBox="0 0 ' + size + ' ' + totalHeight + '">' +
-      '<rect width="100%" height="100%" fill="' + bg + '"/>' + rects + logoMarkup + labelMarkup + '</svg>';
-  }
-
-  function addLabelToCanvas(qrCanvas, label, fg, bg){
-    const size = qrCanvas.width;
-    const lh = labelHeightFor(size);
-    const out = document.createElement('canvas');
-    out.width = size;
-    out.height = size + lh;
-    const ctx = out.getContext('2d');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, out.width, out.height);
-    ctx.drawImage(qrCanvas, 0, 0);
-
-    let fontSize = Math.round(lh * 0.42);
-    const maxWidth = size * 0.92;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = fg;
-    ctx.font = fontSize + 'px ' + LABEL_FONT_STACK;
-
-    let text = label;
-    while(fontSize > 10 && ctx.measureText(text).width > maxWidth){
-      fontSize -= 1;
-      ctx.font = fontSize + 'px ' + LABEL_FONT_STACK;
-    }
-    while(ctx.measureText(text).width > maxWidth && text.length > 1){
-      text = text.slice(0, -1);
-    }
-    if(text !== label) text = text.trim() + '…';
-
-    ctx.fillText(text, size / 2, size + lh / 2);
-    return out;
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">' +
+      '<rect width="100%" height="100%" fill="' + bg + '"/>' + rects + logoMarkup + '</svg>';
   }
 
   function drawLogoOnCanvas(canvas, logoImg, bg){
@@ -753,23 +702,22 @@
     }
 
     const label = labelInput.value.trim();
-    const finalCanvas = label ? addLabelToCanvas(displayCanvas, label, fg, bg) : displayCanvas;
 
-    qrShell.appendChild(finalCanvas);
-    currentCanvas = finalCanvas;
+    qrShell.appendChild(displayCanvas);
+    currentCanvas = displayCanvas;
     currentFileBase = label ? slugify(label) : 'qr-code';
     downloadPng.disabled = false;
     copyBtn.disabled = false;
 
     try {
-      currentSvg = buildSvg(qrInstance, size, fg, bg, logoImage ? { dataUrl: logoDataUrl } : null, label);
+      currentSvg = buildSvg(qrInstance, size, fg, bg, logoImage ? { dataUrl: logoDataUrl } : null);
       downloadSvg.disabled = false;
     } catch(e){
       currentSvg = null;
       downloadSvg.disabled = true;
     }
 
-    const dataUrl = finalCanvas.toDataURL('image/png');
+    const dataUrl = displayCanvas.toDataURL('image/png');
     addToHistory(text, dataUrl, fg, bg, label);
   }
 
