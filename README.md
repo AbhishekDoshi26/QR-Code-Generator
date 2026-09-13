@@ -16,7 +16,7 @@ A free, fast QR code generator. Paste any URL (or plain text), customize the siz
 
 ## Tech
 
-Single static `index.html` file. Uses the [qrcode](https://github.com/soldair/node-qrcode) JS library via CDN for QR rendering. No build step, no backend.
+Single static `index.html` file. Uses the [qrcodejs](https://github.com/davidshimjs/qrcodejs) library via CDN for QR rendering (canvas for the on-screen/PNG output, with a small custom routine that reads the same QR matrix to produce a true vector SVG). No build step, no backend.
 
 ## Running locally
 
@@ -35,4 +35,3 @@ This site is deployed with GitHub Pages directly from the `main` branch.
 ## License
 
 MIT
-
