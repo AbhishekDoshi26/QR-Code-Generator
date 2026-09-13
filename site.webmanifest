@@ -1,7 +1,7 @@
 {
   "name": "QR Forge — Free QR Code Generator",
   "short_name": "QR Forge",
-  "description": "Create free QR codes online. Customize colors, add a logo, and download as PNG or SVG.",
+  "description": "Create free QR codes for links, Wi-Fi, contacts, email, phone, or SMS. Customize colors, add a logo, and download as PNG or SVG.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f6f7fb",
