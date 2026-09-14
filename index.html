@@ -281,7 +281,7 @@
     text-transform:uppercase;
     letter-spacing:.03em;
   }
-  input[type="text"], input[type="url"], select{
+  input[type="text"], input[type="url"], input[type="email"], input[type="tel"], select{
     width:100%;
     padding:12px 14px;
     border-radius:10px;
@@ -291,7 +291,7 @@
     font-size:15px;
     outline:none;
   }
-  input[type="text"]:focus, input[type="url"]:focus, select:focus{
+  input[type="text"]:focus, input[type="url"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus{
     border-color:var(--accent);
     box-shadow:0 0 0 3px var(--accent-soft);
   }
@@ -705,25 +705,25 @@
 
       <div class="field type-panel" data-panel="vcard" hidden>
         <label for="vcardName">Full name</label>
-        <input type="text" id="vcardName" placeholder="Abhishek Doshi" autocomplete="off">
+        <input type="text" id="vcardName" placeholder="Abhishek Doshi" autocomplete="name">
         <div class="row2" style="margin-top:14px;">
           <div>
             <label for="vcardPhone">Phone</label>
-            <input type="text" id="vcardPhone" placeholder="+1 555 555 5555" autocomplete="off">
+            <input type="tel" id="vcardPhone" placeholder="+1 555 555 5555" autocomplete="tel">
           </div>
           <div>
             <label for="vcardEmail">Email</label>
-            <input type="text" id="vcardEmail" placeholder="you@example.com" autocomplete="off">
+            <input type="email" id="vcardEmail" placeholder="you@example.com" autocomplete="email">
           </div>
         </div>
         <div class="row2" style="margin-top:14px;">
           <div>
             <label for="vcardOrg">Company (optional)</label>
-            <input type="text" id="vcardOrg" placeholder="Acme Inc." autocomplete="off">
+            <input type="text" id="vcardOrg" placeholder="Acme Inc." autocomplete="organization">
           </div>
           <div>
             <label for="vcardUrl">Website (optional)</label>
-            <input type="text" id="vcardUrl" placeholder="https://example.com" autocomplete="off">
+            <input type="url" id="vcardUrl" placeholder="https://example.com" autocomplete="url">
           </div>
         </div>
         <div class="hint">Builds a standard vCard — scanning it offers to save the contact directly to a phone.</div>
@@ -731,7 +731,7 @@
 
       <div class="field type-panel" data-panel="email" hidden>
         <label for="emailTo">Recipient email</label>
-        <input type="text" id="emailTo" placeholder="someone@example.com" autocomplete="off">
+        <input type="email" id="emailTo" placeholder="someone@example.com" autocomplete="email">
         <div class="row2" style="margin-top:14px;">
           <div>
             <label for="emailSubject">Subject (optional)</label>
@@ -747,13 +747,13 @@
 
       <div class="field type-panel" data-panel="phone" hidden>
         <label for="phoneNumber">Phone number</label>
-        <input type="text" id="phoneNumber" placeholder="+1 555 555 5555" autocomplete="off">
+        <input type="tel" id="phoneNumber" placeholder="+1 555 555 5555" autocomplete="tel">
         <div class="hint">Scanning dials the number immediately.</div>
       </div>
 
       <div class="field type-panel" data-panel="sms" hidden>
         <label for="smsNumber">Phone number</label>
-        <input type="text" id="smsNumber" placeholder="+1 555 555 5555" autocomplete="off">
+        <input type="tel" id="smsNumber" placeholder="+1 555 555 5555" autocomplete="tel">
         <div class="field" style="margin:14px 0 0;">
           <label for="smsMessage">Message (optional)</label>
           <input type="text" id="smsMessage" placeholder="Pre-filled text message" autocomplete="off">
