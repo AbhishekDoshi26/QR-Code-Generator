@@ -805,7 +805,7 @@
       </div>
 
       <button class="btn" id="generateBtn" type="button">Generate QR code</button>
-      <div class="error-text" id="errorText"></div>
+      <div class="error-text" id="errorText" role="alert" aria-live="assertive"></div>
     </div>
 
     <div class="card preview-card">
@@ -932,7 +932,7 @@
   </footer>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
